@@ -1,0 +1,71 @@
+/* Minimal layout and tokens-aware styling for the FiltersBar */
+.bar {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, minmax(0, 9.38vw)); /* 180px */
+  gap: 0.62vw; /* 12px */
+  padding: 0.62vw; /* 12px */
+  background: var(--color-surface);
+  border: 0.05vw solid rgba(255,255,255,0.06); /* 1px */
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 5; /* ensure native dropdown overlays below content */
+  overflow: visible; /* allow dropdowns to render outside bar */
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.31vw; /* 6px */
+  min-width: 0;
+}
+
+.label {
+  font-size: 0.62vw; /* 12px */
+  color: var(--color-text-muted);
+}
+
+.control {
+  padding: 0.42vw 0.52vw; /* 8px 10px */
+  border-radius: var(--radius-md);
+  border: 0.05vw solid rgba(255,255,255,0.08); /* 1px */
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  position: relative; /* create stacking context for focus */
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkbox {
+  align-items: center;
+  gap: 0.42vw; /* 8px */
+  display: inline-flex;
+}
+
+@media screen and (max-width: 1024px) {
+  .bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.17vw; /* 12px */
+    padding: 1.17vw; /* 12px */
+    border-width: 0.10vw; /* 1px */
+  }
+  .field { gap: 0.59vw; /* 6px */ min-width: 0; }
+  .label { font-size: 1.17vw; /* 12px */ }
+  .control { padding: 0.78vw 0.98vw; border-width: 0.10vw; width: 100%; box-sizing: border-box; }
+  .checkbox { gap: 0.78vw; }
+}
+
+@media screen and (max-width: 600px) {
+  .bar {
+    grid-template-columns: 1fr;
+    gap: 3.05vw; /* 12px */
+    padding: 3.05vw; /* 12px */
+    border-width: 0.25vw; /* 1px */
+  }
+  .field { gap: 1.53vw; /* 6px */ min-width: 0; }
+  .label { font-size: 3.05vw; /* 12px */ }
+  .control { padding: 2.04vw 2.54vw; border-width: 0.25vw; width: 100%; box-sizing: border-box; }
+  .checkbox { gap: 2.04vw; }
+}
+
