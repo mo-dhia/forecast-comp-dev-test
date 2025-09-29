@@ -1,0 +1,43 @@
+// Minimal API client using fetch, with endpoint constants
+
+export const API_ENDPOINTS = {
+  ITEMS: "/api/items",
+  FACETS_GLOBAL: "/api/facets-global",
+};
+
+const baseURL = (import.meta?.env?.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
+
+async function request(method, path, { params, body, headers } = {}) {
+  const url = new URL(baseURL + path);
+  if (params && method === "GET") {
+    Object.entries(params).forEach(([key, value]) => {
+      if (value === undefined || value === null || value === "") return;
+      url.searchParams.set(key, String(value));
+    });
+  }
+
+  const res = await fetch(url.toString(), {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...(headers || {}),
+    },
+    body: method === "GET" ? undefined : JSON.stringify(body ?? {}),
+    credentials: "omit",
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(text || `Request failed with ${res.status}`);
+  }
+  return res.json();
+}
+
+export const apiClient = {
+  get: (path, options) => request("GET", path, options),
+  post: (path, options) => request("POST", path, options),
+  put: (path, options) => request("PUT", path, options),
+  delete: (path, options) => request("DELETE", path, options),
+};
+
+
