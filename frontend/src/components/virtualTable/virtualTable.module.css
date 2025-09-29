@@ -1,0 +1,233 @@
+.container {
+  width: 100%;
+  background: var(--color-surface);
+  border: 0.05vw solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: visible;
+  position: relative;
+}
+
+.headerRow {
+  display: flex;
+  background: var(--color-surface-2);
+  border-bottom: 0.05vw solid rgba(255, 255, 255, 0.08);
+  padding: 0;
+  min-height: 2.50vw;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.headerCell {
+  font-size: 0.62vw;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.03vw;
+  padding: 0.31vw 0.52vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.headerCell:first-child {
+  padding-left: 1.04vw;
+}
+
+.headerCell:last-child {
+  padding-right: 1.04vw;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border-bottom: 0.05vw solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 2.50vw;
+}
+
+.row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.row:focus {
+  outline: 0.10vw solid var(--color-primary);
+  outline-offset: -0.10vw;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cell {
+  font-size: 0.73vw;
+  color: var(--color-text);
+  padding: 0.52vw;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.cell:first-child {
+  padding-left: 1.04vw;
+}
+
+.cell:last-child {
+  padding-right: 1.04vw;
+}
+
+.loading,
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15.62vw;
+  color: var(--color-text-muted);
+  font-size: 0.73vw;
+}
+
+.loadingMore {
+  padding: 1.04vw;
+  text-align: center;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.73vw;
+  border-top: 0.05vw solid rgba(255, 255, 255, 0.08);
+}
+
+/* Responsive: Tablet */
+@media screen and (max-width: 1024px) {
+  .container {
+    overflow-x: auto;
+  }
+  
+  .headerRow {
+    min-height: 4.69vw;
+    padding: 0;
+    border-bottom-width: 0.10vw;
+    min-width: 700px;
+  }
+  
+  .row {
+    min-width: 700px;
+  }
+  
+  .headerCell {
+    font-size: 1.17vw;
+    padding: 0.59vw 0.98vw;
+    letter-spacing: 0.05vw;
+    white-space: nowrap;
+  }
+  
+  .headerCell:first-child {
+    padding-left: 1.95vw;
+  }
+  
+  .headerCell:last-child {
+    padding-right: 1.95vw;
+  }
+  
+  .row {
+    padding: 0;
+    border-bottom-width: 0.10vw;
+    min-height: 4.69vw;
+    min-width: 700px;
+  }
+  
+  .row:focus {
+    outline-width: 0.20vw;
+    outline-offset: -0.20vw;
+  }
+  
+  .cell {
+    font-size: 1.37vw;
+    padding: 0.98vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .cell:first-child {
+    padding-left: 1.95vw;
+  }
+  
+  .cell:last-child {
+    padding-right: 1.95vw;
+  }
+  
+  .loading,
+  .empty {
+    height: 29.30vw;
+    font-size: 1.37vw;
+  }
+}
+
+/* Responsive: Mobile */
+@media screen and (max-width: 600px) {
+  .container {
+    overflow-x: auto;
+  }
+  
+  .headerRow {
+    min-height: 12.21vw;
+    padding: 0;
+    border-bottom-width: 0.25vw;
+    min-width: 600px;
+  }
+  
+  .row {
+    min-width: 600px;
+  }
+  
+  .headerCell {
+    font-size: 3.05vw;
+    padding: 1.53vw 2.54vw;
+    letter-spacing: 0.13vw;
+    white-space: nowrap;
+  }
+  
+  .headerCell:first-child {
+    padding-left: 5.09vw;
+  }
+  
+  .headerCell:last-child {
+    padding-right: 5.09vw;
+  }
+  
+  .row {
+    padding: 0;
+    border-bottom-width: 0.25vw;
+    min-height: 12.21vw;
+    min-width: 600px;
+  }
+  
+  .row:focus {
+    outline-width: 0.51vw;
+    outline-offset: -0.51vw;
+  }
+  
+  .cell {
+    font-size: 3.56vw;
+    padding: 2.54vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .cell:first-child {
+    padding-left: 5.09vw;
+  }
+  
+  .cell:last-child {
+    padding-right: 5.09vw;
+  }
+  
+  .loading,
+  .empty {
+    height: 76.34vw;
+    font-size: 3.56vw;
+  }
+}
