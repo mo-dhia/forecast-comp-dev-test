@@ -3,7 +3,7 @@
 :root {
   /* Typography */
   --font-family-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-size-base: 16px;
+  --font-size-base: 0.83vw; /* 16px */
   --line-height-base: 1.5;
 
   /* Colors */
@@ -28,17 +28,17 @@
                       linear-gradient(180deg, #0b0f13 0%, #0e141b 100%);
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-  --shadow-md: 0 6px 16px rgba(0,0,0,0.35);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.45);
+  --shadow-sm: 0 0.05vw 0.10vw rgba(0,0,0,0.2); /* 1px 2px */
+  --shadow-md: 0 0.31vw 0.83vw rgba(0,0,0,0.35); /* 6px 16px */
+  --shadow-lg: 0 0.62vw 1.67vw rgba(0,0,0,0.45); /* 12px 32px */
 
   /* Radii */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 0.42vw; /* 8px */
+  --radius-md: 0.62vw; /* 12px */
+  --radius-lg: 0.83vw; /* 16px */
 
   /* Layout */
-  --container-max: 1200px;
+  --container-max: 62.5vw; /* 1200px */
 }
 
 html, body, #root {
@@ -67,12 +67,48 @@ button {
   font-family: inherit;
   font-weight: 600;
   border-radius: var(--radius-md);
-  border: 1px solid transparent;
-  padding: 0.6rem 1rem;
+  border: 0.05vw solid transparent; /* 1px */
+  padding: 0.50vw 0.83vw; /* 9.6px 16px */
   background: var(--color-surface-2);
   color: var(--color-text);
   box-shadow: var(--shadow-sm);
 }
 button:hover {
   border-color: var(--color-primary-600);
+}
+
+/* Tablet */
+@media screen and (max-width: 1024px) {
+  :root {
+    --font-size-base: 1.56vw; /* 16px */
+    --shadow-sm: 0 0.10vw 0.20vw rgba(0,0,0,0.2);
+    --shadow-md: 0 0.59vw 1.56vw rgba(0,0,0,0.35);
+    --shadow-lg: 0 1.17vw 3.13vw rgba(0,0,0,0.45);
+    --radius-sm: 0.78vw; /* 8px */
+    --radius-md: 1.17vw; /* 12px */
+    --radius-lg: 1.56vw; /* 16px */
+    --container-max: 117.19vw; /* 1200px */
+  }
+  button {
+    border-width: 0.10vw; /* 1px */
+    padding: 0.94vw 1.56vw; /* 9.6px 16px */
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) {
+  :root {
+    --font-size-base: 4.07vw; /* 16px based on 393 */
+    --shadow-sm: 0 0.25vw 0.51vw rgba(0,0,0,0.2);
+    --shadow-md: 0 1.53vw 4.07vw rgba(0,0,0,0.35);
+    --shadow-lg: 0 3.05vw 8.14vw rgba(0,0,0,0.45);
+    --radius-sm: 2.04vw; /* 8px */
+    --radius-md: 3.05vw; /* 12px */
+    --radius-lg: 4.07vw; /* 16px */
+    --container-max: 305.86vw; /* 1200px */
+  }
+  button {
+    border-width: 0.25vw; /* 1px */
+    padding: 2.44vw 4.07vw; /* 9.6px 16px */
+  }
 }
