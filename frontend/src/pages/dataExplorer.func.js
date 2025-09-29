@@ -1,15 +1,57 @@
-import { useMemo } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useItems, useGlobalFacets } from "../utils/api/services/useItems";
 
 export function useDataExplorer() {
   const [sp] = useSearchParams();
   const paramsObj = useMemo(() => Object.fromEntries(sp.entries()), [sp]);
-  const page = Number(paramsObj.page || 1);
-  const pageSize = Number(paramsObj.pageSize || 10);
+  const [page, setPage] = useState(1);
+  const [allItems, setAllItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  const pageSize = 25;
 
-  const query = useItems({ ...paramsObj, page, pageSize }, { keepPreviousData: true });
+  // Reset page and items when filters change
+  const filterKey = JSON.stringify({ ...paramsObj, page: undefined, pageSize: undefined });
+  useEffect(() => {
+    setPage(1);
+    setAllItems([]);
+  }, [filterKey]);
+
+  const query = useItems({ ...paramsObj, page, pageSize }, { 
+    keepPreviousData: false
+  });
+  
+  // Accumulate data when new page loads
+  useEffect(() => {
+    if (query.data) {
+      if (page === 1) {
+        setAllItems(query.data.items || []);
+      } else {
+        setAllItems(prev => {
+          const newItems = query.data.items || [];
+          // Avoid duplicates
+          const existingIds = new Set(prev.map(item => item.id));
+          const uniqueNewItems = newItems.filter(item => !existingIds.has(item.id));
+          return [...prev, ...uniqueNewItems];
+        });
+      }
+      setTotal(query.data.total || 0);
+    }
+  }, [query.data, page]);
+  
   const facetsQuery = useGlobalFacets();
+  
+  const loadMore = useCallback(() => {
+    if (!query.isFetching && allItems.length < total) {
+      setPage(p => p + 1);
+    }
+  }, [query.isFetching, allItems.length, total]);
+  
+  // Return accumulated data instead of current page data
+  const accumulatedQuery = {
+    ...query,
+    data: allItems.length > 0 || query.data ? { items: allItems, total } : undefined
+  };
 
   const categoryOptions = useMemo(() => {
     const opts = [{ value: '', label: 'All' }];
@@ -58,7 +100,7 @@ export function useDataExplorer() {
     ];
   }, [categoryOptions, taxOptions, paramsObj.priceMin, paramsObj.priceMax, priceRange]);
 
-  return { query, facetsQuery, fields };
+  return { query: accumulatedQuery, facetsQuery, fields, loadMore };
 }
 
 
