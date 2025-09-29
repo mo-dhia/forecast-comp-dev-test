@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .row { min-height: 4.69vw; border-bottom-width: 0.10vw; min-width: 700px; }
+  .row { min-height: 4.69vw; border-bottom-width: 0.10vw; min-width: 68.36vw; }
   .cell { font-size: 1.37vw; padding: 0.98vw; }
   .cell:first-child { padding-left: 1.95vw; }
   .cell:last-child { padding-right: 1.95vw; }
@@ -18,7 +18,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .row { min-height: 12.21vw; border-bottom-width: 0.25vw; min-width: 600px; }
+  .row { min-height: 12.21vw; border-bottom-width: 0.25vw; min-width: 152.67vw; }
   .cell { font-size: 3.56vw; padding: 2.54vw; }
   .cell:first-child { padding-left: 5.09vw; }
   .cell:last-child { padding-right: 5.09vw; }

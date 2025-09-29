@@ -1,35 +1,8 @@
-import { useRef } from 'react';
 import styles from './rangeSlider.module.css';
-import { useDebouncedRangeInput } from './rangeSlider.func';
+import { useRangeSlider } from './rangeSlider.func';
 
 export default function RangeSlider({ min = 0, max = 100, valueMin, valueMax, onChangeMin, onChangeMax, onDebouncedChangeMin, onDebouncedChangeMax, step = 1, debounceMs }) {
-  const { draftMin, draftMax, setDraftMin, setDraftMax } = useDebouncedRangeInput(valueMin, valueMax, debounceMs, onDebouncedChangeMin, onDebouncedChangeMax);
-  const minRef = useRef(null);
-  const maxRef = useRef(null);
-
-  const localMin = debounceMs != null ? draftMin : valueMin ?? min;
-  const localMax = debounceMs != null ? draftMax : valueMax ?? max;
-
-  const handleMinChange = (e) => {
-    const value = Math.min(Number(e.target.value), localMax - step);
-    if (debounceMs != null) {
-      setDraftMin(value);
-    } else {
-      onChangeMin?.(value);
-    }
-  };
-
-  const handleMaxChange = (e) => {
-    const value = Math.max(Number(e.target.value), localMin + step);
-    if (debounceMs != null) {
-      setDraftMax(value);
-    } else {
-      onChangeMax?.(value);
-    }
-  };
-
-  const minPercent = ((localMin - min) / (max - min)) * 100;
-  const maxPercent = ((localMax - min) / (max - min)) * 100;
+  const { minRef, maxRef, localMin, localMax, handleMinChange, handleMaxChange, minPercent, maxPercent } = useRangeSlider({ min, max, valueMin, valueMax, step, debounceMs, onChangeMin, onChangeMax, onDebouncedChangeMin, onDebouncedChangeMax });
 
   return (
     <div className={styles.container}>

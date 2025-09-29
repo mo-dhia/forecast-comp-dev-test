@@ -1,16 +1,13 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
 import FiltersBar from "../components/filtersBar/filtersBar";
 import VirtualTable from "../components/virtualTable/virtualTable";
 import { useDataExplorer } from "./dataExplorer.func";
 import styles from "./dataExplorer.module.css";
 
-
 export default function DataExplorer() {
   const { query, facetsQuery, fields, loadMore } = useDataExplorer();
   const { data, isLoading, isFetching, error } = query;
 
-  // Column definitions for the table
   const columns = useMemo(() => [
     { 
       key: 'name', 

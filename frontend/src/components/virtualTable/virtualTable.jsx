@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo } from 'react';
 import { FixedSizeList } from 'react-window';
 import { useVirtualTable } from './virtualTable.func';
 import SkeletonRow from './skeletonRow';
@@ -9,7 +9,6 @@ import styles from './virtualTable.module.css';
  * @param {Object[]} data - Array of data items to display
  * @param {Object[]} columns - Column definitions with key, label, width, render
  * @param {number} rowHeight - Height of each row in pixels
- * @param {number} height - Total height of the table container
  * @param {boolean} isLoading - Loading state
  * @param {boolean} isFetchingMore - Fetching more data state
  * @param {boolean} hasMore - Whether there is more data to load
@@ -26,31 +25,7 @@ function VirtualTable({
   onLoadMore,
   onRowClick 
 }) {
-  const { createRowRenderer } = useVirtualTable(data, columns, onRowClick);
-  const containerRef = useRef(null);
-  
-  // Listen to window scroll to trigger load more
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!hasMore || isFetchingMore || !containerRef.current) return;
-      
-      const container = containerRef.current;
-      const rect = container.getBoundingClientRect();
-      const scrollBottom = window.innerHeight;
-      const containerBottom = rect.bottom;
-      
-      // Load more when container bottom is 500px above viewport bottom (earlier trigger)
-      if (containerBottom - scrollBottom < 500) {
-        onLoadMore?.();
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    // Check immediately in case we need to load
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasMore, isFetchingMore, onLoadMore]);
+  const { containerRef } = useVirtualTable(hasMore, isFetchingMore, onLoadMore);
 
   // Header row renderer
   const renderHeader = () => (

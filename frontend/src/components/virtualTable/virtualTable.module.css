@@ -112,11 +112,11 @@
     min-height: 4.69vw;
     padding: 0;
     border-bottom-width: 0.10vw;
-    min-width: 700px;
+    min-width: 68.36vw;
   }
   
   .row {
-    min-width: 700px;
+    min-width: 68.36vw;
   }
   
   .headerCell {
@@ -137,7 +137,7 @@
   .row {
     padding: 0;
     border-bottom-width: 0.10vw;
-    min-width: 700px;
+    min-width: 68.36vw;
   }
   
   .row:focus {
@@ -178,11 +178,11 @@
     min-height: 12.21vw;
     padding: 0;
     border-bottom-width: 0.25vw;
-    min-width: 600px;
+    min-width: 152.67vw;
   }
   
   .row {
-    min-width: 600px;
+    min-width: 152.67vw;
   }
   
   .headerCell {
@@ -203,7 +203,7 @@
   .row {
     padding: 0;
     border-bottom-width: 0.25vw;
-    min-width: 600px;
+    min-width: 152.67vw;
   }
   
   .row:focus {

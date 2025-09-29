@@ -1,5 +1,5 @@
 import styles from './input.module.css'
-import { useDebouncedControlledInput } from './input.func'
+import { useInput } from './input.func'
 import RangeSlider from '../rangeSlider/rangeSlider'
 
 export default function Input({
@@ -15,14 +15,8 @@ export default function Input({
   rangeConfig,
   ...rest
 }) {
-  const { draft, setDraft } = useDebouncedControlledInput(value, debounceMs, onDebouncedChange)
+  const { handleChange, displayValue } = useInput({ value, debounceMs, onDebouncedChange, onChange })
   const rootClass = className || styles.root
-
-  const handleChange = (e) => {
-    const v = e.target.value
-    if (debounceMs != null) setDraft(v)
-    else onChange?.(v)
-  }
 
   if (type === 'range' && rangeConfig) {
     return (
@@ -52,7 +46,7 @@ export default function Input({
           {children}
         </select>
       ) : (
-        <input className={rootClass} type={type} value={debounceMs != null ? draft : value ?? ''} onChange={handleChange} placeholder={placeholder} {...rest} />
+        <input className={rootClass} type={type} value={displayValue} onChange={handleChange} placeholder={placeholder} {...rest} />
       )}
     </div>
   )
