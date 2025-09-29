@@ -37,6 +37,21 @@
   box-sizing: border-box;
 }
 
+/* Ensure select arrow aligns with input text padding */
+select.control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239aa4b2' d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right calc(0.52vw * 0.5) center;
+  background-size: 1.04vw 1.04vw;
+  padding-right: 1.56vw;
+}
+
+/* hide IE dropdown arrow */
+select.control::-ms-expand { display: none; }
+
 .checkbox {
   align-items: center;
   gap: 0.42vw; /* 8px */
@@ -53,6 +68,7 @@
   .field { gap: 0.59vw; /* 6px */ min-width: 0; }
   .label { font-size: 1.17vw; /* 12px */ }
   .control { padding: 0.78vw 0.98vw; border-width: 0.10vw; width: 100%; box-sizing: border-box; }
+  select.control { background-position: right calc(0.98vw * 0.5) center; background-size: 1.95vw 1.95vw; padding-right: 2.93vw; }
   .checkbox { gap: 0.78vw; }
 }
 
@@ -66,6 +82,7 @@
   .field { gap: 1.53vw; /* 6px */ min-width: 0; }
   .label { font-size: 3.05vw; /* 12px */ }
   .control { padding: 2.04vw 2.54vw; border-width: 0.25vw; width: 100%; box-sizing: border-box; }
+  select.control { background-position: right calc(2.54vw * 0.5) center; background-size: 5.09vw 5.09vw; padding-right: 7.63vw; }
   .checkbox { gap: 2.04vw; }
 }
 
