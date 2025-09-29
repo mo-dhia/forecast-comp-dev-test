@@ -1,0 +1,11 @@
+.root { padding: 0.42vw 0.52vw; border-radius: var(--radius-md); border: 0.05vw solid rgba(255,255,255,0.08); background: var(--color-surface-2); color: var(--color-text); }
+.label { font-size: 0.62vw; color: var(--color-text-muted); margin-bottom: 0.31vw; display: block; }
+
+@media screen and (max-width: 1024px) {
+  .label { font-size: 1.17vw; margin-bottom: 0.59vw; }
+}
+
+@media screen and (max-width: 600px) {
+  .label { font-size: 3.05vw; margin-bottom: 1.53vw; }
+}
+
