@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { FixedSizeList } from 'react-window';
 import { useVirtualTable } from './virtualTable.func';
+import SkeletonRow from './skeletonRow';
 import styles from './virtualTable.module.css';
 
 /**
@@ -38,8 +39,8 @@ function VirtualTable({
       const scrollBottom = window.innerHeight;
       const containerBottom = rect.bottom;
       
-      // Load more when container bottom is 300px above viewport bottom
-      if (containerBottom - scrollBottom < 300) {
+      // Load more when container bottom is 500px above viewport bottom (earlier trigger)
+      if (containerBottom - scrollBottom < 500) {
         onLoadMore?.();
       }
     };
@@ -109,7 +110,11 @@ function VirtualTable({
     return (
       <div className={styles.container} ref={containerRef}>
         {renderHeader()}
-        <div className={styles.loading}>Loading...</div>
+        <div className={styles.skeletonContainer}>
+          {Array.from({ length: 10 }).map((_, idx) => (
+            <SkeletonRow key={idx} columns={columns} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -139,7 +144,11 @@ function VirtualTable({
         {Row}
       </FixedSizeList>
       {isFetchingMore && (
-        <div className={styles.loadingMore}>Loading more...</div>
+        <div className={styles.skeletonContainer}>
+          {Array.from({ length: 5 }).map((_, idx) => (
+            <SkeletonRow key={idx} columns={columns} />
+          ))}
+        </div>
       )}
     </div>
   );

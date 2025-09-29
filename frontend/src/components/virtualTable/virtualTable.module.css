@@ -89,6 +89,10 @@
   font-size: 0.73vw;
 }
 
+.skeletonContainer {
+  width: 100%;
+}
+
 .loadingMore {
   padding: 1.04vw;
   text-align: center;
