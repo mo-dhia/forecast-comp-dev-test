@@ -7,6 +7,8 @@
   ],
   "scripts": {
     "setup": "npm install -w backend && npm install -w frontend",
+    "install:all": "npm install",
+    "i:all": "npm run install:all",
     "dev": "npm run dev:all",
     "dev:all": "npm-run-all -p dev:backend dev:frontend",
     "dev:backend": "npm --prefix backend run dev",
