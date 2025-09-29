@@ -6,12 +6,13 @@ import styles from "./dataExplorer.module.css";
 export default function DataExplorer() {
   const { query, facetsQuery, fields } = useDataExplorer();
   const { data, isLoading, isFetching, error } = query;
+
   return (
     <main className={styles.page}>
       <FiltersBar
         fields={fields}
         resetPageKeys={["q","category","taxCategory","inStock","priceMin","priceMax","pageSize","sortBy","sortDir"]}
-        replaceKeys={["q"]}
+        replaceKeys={["q","priceMin","priceMax"]}
       />
       <section className={styles.content}>
         {error ? (

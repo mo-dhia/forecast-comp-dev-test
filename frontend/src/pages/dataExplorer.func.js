@@ -25,18 +25,38 @@ export function useDataExplorer() {
     return opts;
   }, [facetsQuery.data]);
 
-  const fields = useMemo(() => ([
-    { key: 'q', label: 'Search', type: 'text', placeholder: 'Search…', debounceMs: 300 },
-    { key: 'category', label: 'Category', type: 'select', options: categoryOptions },
-    { key: 'taxCategory', label: 'Tax', type: 'select', options: taxOptions },
-    { key: 'inStock', label: 'In stock', type: 'select', options: [
-      { value: '', label: 'Any' },
-      { value: 'true', label: 'Yes' },
-      { value: 'false', label: 'No' },
-    ] },
-    { key: 'priceMin', label: 'Price min', type: 'number', debounceMs: 300 },
-    { key: 'priceMax', label: 'Price max', type: 'number', debounceMs: 300 },
-  ]), [categoryOptions, taxOptions]);
+  const priceRange = { min: 0, max: 2000, step: 1 };
+
+  const fields = useMemo(() => {
+    const priceMin = Number(paramsObj.priceMin) || priceRange.min;
+    const priceMax = Number(paramsObj.priceMax) || priceRange.max;
+    
+    return [
+      { key: 'q', label: 'Search', type: 'text', placeholder: 'Search…', debounceMs: 300 },
+      { key: 'category', label: 'Category', type: 'select', options: categoryOptions },
+      { key: 'taxCategory', label: 'Tax', type: 'select', options: taxOptions },
+      { key: 'inStock', label: 'In stock', type: 'select', options: [
+        { value: '', label: 'Any' },
+        { value: 'true', label: 'Yes' },
+        { value: 'false', label: 'No' },
+      ] },
+      {
+        key: 'price',
+        label: 'Price',
+        type: 'range',
+        debounceMs: 300,
+        rangeConfig: {
+          min: priceRange.min,
+          max: priceRange.max,
+          step: priceRange.step,
+          valueMin: priceMin,
+          valueMax: priceMax,
+          onDebouncedChangeMin: (val) => {},
+          onDebouncedChangeMax: (val) => {}
+        }
+      }
+    ];
+  }, [categoryOptions, taxOptions, paramsObj.priceMin, paramsObj.priceMax, priceRange]);
 
   return { query, facetsQuery, fields };
 }

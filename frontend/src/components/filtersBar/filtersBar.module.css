@@ -1,7 +1,7 @@
 /* Minimal layout and tokens-aware styling for the FiltersBar */
 .bar {
   display: grid;
-  grid-template-columns: 1fr repeat(5, minmax(0, 9.38vw)); /* 180px */
+  grid-template-columns: 1.5fr repeat(3, minmax(0, 9.38vw)) 1.5fr; /* 180px */
   gap: 0.62vw; /* 12px */
   padding: 0.62vw; /* 12px */
   background: var(--color-surface);
