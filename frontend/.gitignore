@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Include env files for assessment (override any ignore like *.local)
+!.env
+!.env.*
+!.env.local
