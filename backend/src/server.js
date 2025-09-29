@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -13,10 +14,9 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 const PORT = process.env.PORT || 4000;
-const DATA_PATH = path.resolve(
-  path.dirname(new URL(import.meta.url).pathname),
-  '../data/items.json'
-);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_PATH = path.resolve(__dirname, '../data/items.json');
 
 // Load dataset once at boot
 let DATA = JSON.parse(fs.readFileSync(DATA_PATH, 'utf-8'));
