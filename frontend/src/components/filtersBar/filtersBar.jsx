@@ -38,6 +38,7 @@ function FiltersBar({ fields, resetPageKeys = [], replaceKeys = [] }) {
               onDebouncedChange={(val) => setParam(f.key, val)}
               inputMode={f.type === "number" ? "decimal" : undefined}
               rangeConfig={rangeConfig}
+              disabled={f.disabled}
             >
               {f.type === "select" && (f.options || []).map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>

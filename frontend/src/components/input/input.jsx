@@ -13,6 +13,7 @@ export default function Input({
   className,
   children,
   rangeConfig,
+  disabled = false,
   ...rest
 }) {
   const { handleChange, displayValue } = useInput({ value, debounceMs, onDebouncedChange, onChange })
@@ -33,6 +34,7 @@ export default function Input({
           onDebouncedChangeMin={rangeConfig.onDebouncedChangeMin}
           onDebouncedChangeMax={rangeConfig.onDebouncedChangeMax}
           debounceMs={debounceMs}
+          disabled={disabled}
         />
       </div>
     )
@@ -42,11 +44,11 @@ export default function Input({
     <div>
       {label ? <label className={styles.label}>{label}</label> : null}
       {type === 'select' ? (
-        <select className={rootClass} value={value ?? ''} onChange={(e) => onChange?.(e.target.value)} {...rest}>
+        <select className={rootClass} value={value ?? ''} onChange={(e) => onChange?.(e.target.value)} disabled={disabled} {...rest}>
           {children}
         </select>
       ) : (
-        <input className={rootClass} type={type} value={displayValue} onChange={handleChange} placeholder={placeholder} {...rest} />
+        <input className={rootClass} type={type} value={displayValue} onChange={handleChange} placeholder={placeholder} disabled={disabled} {...rest} />
       )}
     </div>
   )
