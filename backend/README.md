@@ -60,3 +60,18 @@ PORT=4000
 ```
 
 The `facets` object is handy for filter UIs & charts.
+
+### GET `/api/metadata`
+
+**Response**
+```json
+{
+  "priceRange": {
+    "min": 0,
+    "max": 200,
+    "step": 1
+  }
+}
+```
+
+Provides metadata for filter inputs (e.g., dynamic price range from actual data).

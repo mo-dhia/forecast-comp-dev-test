@@ -149,6 +149,21 @@ app.get('/api/facets-global', (_req, res) => {
   res.json({ scope: 'global', facets });
 });
 
+// Filter metadata (price range, etc.)
+app.get('/api/metadata', (_req, res) => {
+  const prices = DATA.map(item => Number(item.price)).filter(p => !isNaN(p));
+  const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+  const maxPrice = prices.length > 0 ? Math.max(...prices) : 1000;
+  
+  res.json({
+    priceRange: {
+      min: Math.floor(minPrice),
+      max: Math.ceil(maxPrice),
+      step: 1
+    }
+  });
+});
+
 // Root
 app.get('/', (_req, res) => {
   res.send('Accessible Data Explorer API. See /api/items');
