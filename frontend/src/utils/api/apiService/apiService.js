@@ -9,7 +9,7 @@ export const API_ENDPOINTS = {
 const baseURL = (import.meta?.env?.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
 
 // TODO: Remove this delay before production - for skeleton testing only
-const SKELETON_TEST_DELAY = 5000; // 5 seconds
+const SKELETON_TEST_DELAY = 2000; // 5 seconds
 
 async function request(method, path, { params, body, headers } = {}) {
   const url = new URL(baseURL + path);
