@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useItems, useGlobalFacets } from "../utils/api/services/useItems";
+import { useItems, useGlobalFacets, useMetadata } from "../utils/api/services/useItems";
 
 export function useDataExplorer() {
   const [sp] = useSearchParams();
@@ -40,6 +40,7 @@ export function useDataExplorer() {
   }, [query.data, page]);
   
   const facetsQuery = useGlobalFacets();
+  const metadataQuery = useMetadata();
   
   const loadMore = useCallback(() => {
     if (!query.isFetching && allItems.length < total) {
@@ -67,26 +68,31 @@ export function useDataExplorer() {
     return opts;
   }, [facetsQuery.data]);
 
-  const priceRange = { min: 0, max: 2000, step: 1 };
+  const priceRange = useMemo(() => 
+    metadataQuery.data?.priceRange || { min: 0, max: 200, step: 1 },
+    [metadataQuery.data]
+  );
 
   const fields = useMemo(() => {
     const priceMin = Number(paramsObj.priceMin) || priceRange.min;
     const priceMax = Number(paramsObj.priceMax) || priceRange.max;
+    const isLoadingFilters = facetsQuery.isLoading || metadataQuery.isLoading;
     
     return [
-      { key: 'q', label: 'Search', type: 'text', placeholder: 'Search…', debounceMs: 300 },
-      { key: 'category', label: 'Category', type: 'select', options: categoryOptions },
-      { key: 'taxCategory', label: 'Tax', type: 'select', options: taxOptions },
+      { key: 'q', label: 'Search', type: 'text', placeholder: 'Search…', debounceMs: 300, disabled: isLoadingFilters },
+      { key: 'category', label: 'Category', type: 'select', options: categoryOptions, disabled: isLoadingFilters },
+      { key: 'taxCategory', label: 'Tax', type: 'select', options: taxOptions, disabled: isLoadingFilters },
       { key: 'inStock', label: 'In stock', type: 'select', options: [
         { value: '', label: 'Any' },
         { value: 'true', label: 'Yes' },
         { value: 'false', label: 'No' },
-      ] },
+      ], disabled: isLoadingFilters },
       {
         key: 'price',
         label: 'Price',
         type: 'range',
         debounceMs: 300,
+        disabled: isLoadingFilters,
         rangeConfig: {
           min: priceRange.min,
           max: priceRange.max,
@@ -98,7 +104,7 @@ export function useDataExplorer() {
         }
       }
     ];
-  }, [categoryOptions, taxOptions, paramsObj.priceMin, paramsObj.priceMax, priceRange]);
+  }, [categoryOptions, taxOptions, paramsObj.priceMin, paramsObj.priceMax, priceRange, facetsQuery.isLoading, metadataQuery.isLoading]);
 
   return { query: accumulatedQuery, facetsQuery, fields, loadMore };
 }
