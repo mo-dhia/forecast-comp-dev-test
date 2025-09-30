@@ -25,7 +25,7 @@ function VirtualTable({
   onLoadMore,
   onRowClick 
 }) {
-  const { containerRef, focusedRowIndex, setFocusedRowIndex, handleKeyDown } = useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick, data.length);
+  const { containerRef, focusedRowIndex, setFocusedRowIndex, handleKeyDown, focusedRowRef } = useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick, data.length);
 
   // Header row renderer
   const renderHeader = () => (
@@ -85,14 +85,22 @@ function VirtualTable({
 
     return (
       <div 
+        ref={isFocused ? focusedRowRef : null}
         className={`${styles.row} ${isFocused ? styles.focused : ''}`}
         style={style}
         onClick={handleClick}
         onKeyDown={handleKeyDownLocal}
+        onFocus={() => setFocusedRowIndex(index)}
+        onBlur={(e) => {
+          // Only clear focus if focus is leaving the table entirely
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            setFocusedRowIndex(-1);
+          }
+        }}
         role="row"
         aria-rowindex={index + 2}
         aria-selected={isFocused}
-        tabIndex={isFocused ? 0 : -1}
+        tabIndex={index === 0 && focusedRowIndex === -1 ? 0 : isFocused ? 0 : -1}
       >
         {columns.map((col) => (
           <div 

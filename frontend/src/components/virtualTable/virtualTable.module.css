@@ -56,15 +56,13 @@
 }
 
 .row:focus {
-  outline: 0.10vw solid var(--color-primary);
-  outline-offset: -0.10vw;
-  background: rgba(255, 255, 255, 0.04);
+  outline: none;
 }
 
 .row.focused {
-  background: rgba(255, 255, 255, 0.04);
   outline: 0.10vw solid var(--color-primary);
   outline-offset: -0.10vw;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .cell {
@@ -172,6 +170,10 @@
   }
   
   .row:focus {
+    outline: none;
+  }
+  
+  .row.focused {
     outline-width: 0.20vw;
     outline-offset: -0.20vw;
   }
@@ -243,6 +245,10 @@
   }
   
   .row:focus {
+    outline: none;
+  }
+  
+  .row.focused {
     outline-width: 0.51vw;
     outline-offset: -0.51vw;
   }

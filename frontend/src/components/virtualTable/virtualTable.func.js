@@ -11,6 +11,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 export function useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick, dataLength) {
   const containerRef = useRef(null);
   const [focusedRowIndex, setFocusedRowIndex] = useState(-1);
+  const focusedRowRef = useRef(null);
   
   // Listen to window scroll to trigger load more
   useEffect(() => {
@@ -39,25 +40,34 @@ export function useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick,
   const handleKeyDown = useCallback((e, data) => {
     if (!data || dataLength === 0) return;
 
+    let newIndex = focusedRowIndex;
+    
     switch(e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setFocusedRowIndex(prev => Math.min(prev + 1, dataLength - 1));
+        e.stopPropagation();
+        newIndex = Math.min(focusedRowIndex + 1, dataLength - 1);
+        setFocusedRowIndex(newIndex);
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setFocusedRowIndex(prev => Math.max(prev - 1, 0));
+        e.stopPropagation();
+        newIndex = Math.max(focusedRowIndex - 1, 0);
+        setFocusedRowIndex(newIndex);
         break;
       case 'Home':
         e.preventDefault();
+        e.stopPropagation();
         setFocusedRowIndex(0);
         break;
       case 'End':
         e.preventDefault();
+        e.stopPropagation();
         setFocusedRowIndex(dataLength - 1);
         break;
       case 'Enter':
         e.preventDefault();
+        e.stopPropagation();
         if (focusedRowIndex >= 0 && focusedRowIndex < dataLength) {
           onRowClick?.(data[focusedRowIndex], focusedRowIndex);
         }
@@ -67,10 +77,25 @@ export function useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick,
     }
   }, [dataLength, focusedRowIndex, onRowClick]);
 
+  // Scroll focused row into view and set DOM focus
+  useEffect(() => {
+    if (focusedRowRef.current && focusedRowIndex >= 0) {
+      // Set DOM focus to prevent browser from handling arrow keys
+      focusedRowRef.current.focus({ preventScroll: true });
+      
+      // Then smoothly scroll into view
+      focusedRowRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+    }
+  }, [focusedRowIndex]);
+
   return {
     containerRef,
     focusedRowIndex,
     setFocusedRowIndex,
-    handleKeyDown
+    handleKeyDown,
+    focusedRowRef
   };
 }
