@@ -5,7 +5,8 @@
   margin-bottom: 1.04vw;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 1.04vw;
 }
 
 .header h1 {
@@ -37,7 +38,7 @@
 @media screen and (max-width: 600px) {
   .page { padding: 5.09vw; }
   .content { margin-top: 5.09vw; }
-  .header { margin-bottom: 5.09vw; flex-direction: column; align-items: flex-start; gap: 1.27vw; }
+  .header { margin-bottom: 5.09vw; flex-direction: column; align-items: flex-start; gap: 2.54vw; }
   .header h1 { font-size: 7.63vw; }
   .stats { font-size: 3.56vw; }
   .updating { font-size: 3.05vw; }

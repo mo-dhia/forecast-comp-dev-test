@@ -1,0 +1,77 @@
+.container { position: relative; }
+.trigger { display: flex; align-items: center; gap: 0.42vw; padding: 0.52vw 1.04vw; background: var(--color-surface); border: 0.05vw solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--color-text); font-size: 0.73vw; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+.trigger:hover { background: var(--color-surface-2); border-color: rgba(255,255,255,0.12); }
+.trigger svg { flex-shrink: 0; }
+.dropdown { position: absolute; top: calc(100% + 0.52vw); right: 0; width: 20.83vw; background: rgb(18, 24, 31); border: 0.05vw solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); z-index: 1000; max-height: 31.25vw; display: flex; flex-direction: column; }
+.header { display: flex; justify-content: space-between; align-items: center; padding: 1.04vw; border-bottom: 0.05vw solid rgba(255,255,255,0.08); }
+.header h3 { font-size: 0.83vw; font-weight: 600; color: var(--color-text); margin: 0; }
+.closeBtn { background: none; border: none; color: var(--color-text-muted); font-size: 1.56vw; line-height: 1; cursor: pointer; padding: 0; width: 1.56vw; height: 1.56vw; display: flex; align-items: center; justify-content: center; transition: color 0.2s ease; }
+.closeBtn:hover { color: var(--color-text); }
+.actions { padding: 1.04vw; display: flex; flex-direction: column; gap: 0.52vw; border-bottom: 0.05vw solid rgba(255,255,255,0.08); }
+.saveBtn { padding: 0.52vw 1.04vw; background: var(--color-primary); color: white; border: none; border-radius: var(--radius-md); font-size: 0.73vw; font-weight: 500; cursor: pointer; transition: background 0.2s ease; }
+.saveBtn:hover { background: var(--color-primary-600); }
+.saveForm { display: flex; gap: 0.52vw; }
+.input { flex: 1; padding: 0.52vw; background: var(--color-surface-2); border: 0.05vw solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--color-text); font-size: 0.73vw; }
+.input:focus { outline: 0.10vw solid var(--color-primary); outline-offset: -0.10vw; }
+.confirmBtn { padding: 0.52vw 1.04vw; background: var(--color-success); color: white; border: none; border-radius: var(--radius-md); font-size: 0.73vw; font-weight: 500; cursor: pointer; transition: opacity 0.2s ease; }
+.confirmBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.confirmBtn:hover:not(:disabled) { opacity: 0.9; }
+.cancelBtn { padding: 0.52vw 1.04vw; background: transparent; color: var(--color-text-muted); border: 0.05vw solid rgba(255,255,255,0.08); border-radius: var(--radius-md); font-size: 0.73vw; cursor: pointer; transition: all 0.2s ease; }
+.cancelBtn:hover { border-color: rgba(255,255,255,0.12); color: var(--color-text); }
+.shareBtn { padding: 0.52vw 1.04vw; background: transparent; color: var(--color-text); border: 0.05vw solid rgba(255,255,255,0.08); border-radius: var(--radius-md); font-size: 0.73vw; cursor: pointer; transition: all 0.2s ease; }
+.shareBtn:hover { border-color: rgba(255,255,255,0.12); background: var(--color-surface-2); }
+.shareBtn.success { background: var(--color-success); color: white; border-color: var(--color-success); }
+.viewsList { overflow-y: auto; max-height: 20.83vw; }
+.viewItem { display: flex; justify-content: space-between; align-items: center; padding: 0.83vw 1.04vw; cursor: pointer; transition: background 0.2s ease; border-bottom: 0.05vw solid rgba(255,255,255,0.04); }
+.viewItem:hover { background: rgba(255,255,255,0.02); }
+.viewItem:last-child { border-bottom: none; }
+.viewInfo { flex: 1; min-width: 0; }
+.viewName { font-size: 0.73vw; color: var(--color-text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.viewDate { font-size: 0.62vw; color: var(--color-text-muted); margin-top: 0.21vw; }
+.deleteBtn { background: none; border: none; color: var(--color-text-muted); font-size: 1.04vw; cursor: pointer; padding: 0.26vw; transition: color 0.2s ease; flex-shrink: 0; }
+.deleteBtn:hover { color: var(--color-danger); }
+.empty { padding: 2.08vw 1.04vw; text-align: center; color: var(--color-text-muted); font-size: 0.73vw; line-height: 1.5; }
+
+@media screen and (max-width: 1024px) {
+  .trigger { gap: 0.78vw; padding: 0.98vw 1.95vw; border-width: 0.10vw; font-size: 1.37vw; }
+  .dropdown { top: calc(100% + 0.98vw); width: 39.06vw; border-width: 0.10vw; max-height: 58.59vw; }
+  .header { padding: 1.95vw; border-bottom-width: 0.10vw; }
+  .header h3 { font-size: 1.56vw; }
+  .closeBtn { font-size: 2.93vw; width: 2.93vw; height: 2.93vw; }
+  .actions { padding: 1.95vw; gap: 0.98vw; border-bottom-width: 0.10vw; }
+  .saveBtn { padding: 0.98vw 1.95vw; font-size: 1.37vw; }
+  .saveForm { gap: 0.98vw; }
+  .input { padding: 0.98vw; border-width: 0.10vw; font-size: 1.37vw; }
+  .input:focus { outline-width: 0.20vw; outline-offset: -0.20vw; }
+  .confirmBtn { padding: 0.98vw 1.95vw; font-size: 1.37vw; }
+  .cancelBtn { padding: 0.98vw 1.95vw; border-width: 0.10vw; font-size: 1.37vw; }
+  .shareBtn { padding: 0.98vw 1.95vw; border-width: 0.10vw; font-size: 1.37vw; }
+  .viewsList { max-height: 39.06vw; }
+  .viewItem { padding: 1.56vw 1.95vw; border-bottom-width: 0.10vw; }
+  .viewName { font-size: 1.37vw; }
+  .viewDate { font-size: 1.17vw; margin-top: 0.39vw; }
+  .deleteBtn { font-size: 1.95vw; padding: 0.49vw; }
+  .empty { padding: 3.91vw 1.95vw; font-size: 1.37vw; }
+}
+
+@media screen and (max-width: 600px) {
+  .trigger { gap: 2.04vw; padding: 2.54vw 5.09vw; border-width: 0.25vw; font-size: 3.56vw; }
+  .dropdown { top: calc(100% + 2.54vw); width: 101.78vw; border-width: 0.25vw; max-height: 152.67vw; }
+  .header { padding: 5.09vw; border-bottom-width: 0.25vw; }
+  .header h3 { font-size: 4.07vw; }
+  .closeBtn { font-size: 7.63vw; width: 7.63vw; height: 7.63vw; }
+  .actions { padding: 5.09vw; gap: 2.54vw; border-bottom-width: 0.25vw; }
+  .saveBtn { padding: 2.54vw 5.09vw; font-size: 3.56vw; }
+  .saveForm { gap: 2.54vw; }
+  .input { padding: 2.54vw; border-width: 0.25vw; font-size: 3.56vw; }
+  .input:focus { outline-width: 0.51vw; outline-offset: -0.51vw; }
+  .confirmBtn { padding: 2.54vw 5.09vw; font-size: 3.56vw; }
+  .cancelBtn { padding: 2.54vw 5.09vw; border-width: 0.25vw; font-size: 3.56vw; }
+  .shareBtn { padding: 2.54vw 5.09vw; border-width: 0.25vw; font-size: 3.56vw; }
+  .viewsList { max-height: 101.78vw; }
+  .viewItem { padding: 4.07vw 5.09vw; border-bottom-width: 0.25vw; }
+  .viewName { font-size: 3.56vw; }
+  .viewDate { font-size: 3.05vw; margin-top: 1.02vw; }
+  .deleteBtn { font-size: 5.09vw; padding: 1.27vw; }
+  .empty { padding: 10.18vw 5.09vw; font-size: 3.56vw; }
+}

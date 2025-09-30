@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import FiltersBar from "../components/filtersBar/filtersBar";
 import VirtualTable from "../components/virtualTable/virtualTable";
+import SavedViewsManager from "../features/savedViews/SavedViewsManager";
 import { useDataExplorer } from "./dataExplorer.func";
 import styles from "./dataExplorer.module.css";
 
@@ -62,12 +63,15 @@ export default function DataExplorer() {
       />
       <section className={styles.content}>
         <div className={styles.header}>
-          <h1>
-            Data Explorer {isFetching ? <small className={styles.updating}>(updating...)</small> : null}
-          </h1>
-          <p className={styles.stats}>
-            Total items: <strong>{data?.total ?? '—'}</strong>
-          </p>
+          <div>
+            <h1>
+              Data Explorer {isFetching ? <small className={styles.updating}>(updating...)</small> : null}
+            </h1>
+            <p className={styles.stats}>
+              Total items: <strong>{data?.total ?? '—'}</strong>
+            </p>
+          </div>
+          <SavedViewsManager />
         </div>
         
         {error ? (
