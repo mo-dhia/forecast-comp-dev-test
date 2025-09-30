@@ -85,6 +85,20 @@
   padding-right: 1.04vw;
 }
 
+.skeleton {
+  height: 0.83vw;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.21vw;
+  width: 80%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 .loading,
 .empty {
   display: flex;
@@ -97,21 +111,32 @@
 
 .skeletonContainer {
   width: 100%;
+  position: relative;
 }
 
 .loadingMore {
-  padding: 1.04vw;
+  position: absolute;
+  bottom: -2.08vw;
+  left: 0;
+  right: 0;
+  padding: 0.52vw 1.04vw;
   text-align: center;
-  background: var(--color-surface);
+  background: transparent;
   color: var(--color-text-muted);
   font-size: 0.73vw;
-  border-top: 0.05vw solid rgba(255, 255, 255, 0.08);
+  font-weight: 500;
+  pointer-events: none;
 }
 
 /* Responsive: Tablet */
 @media screen and (max-width: 1024px) {
   .container {
     overflow-x: auto;
+  }
+  
+  .skeleton {
+    height: 1.56vw;
+    border-radius: 0.39vw;
   }
   
   .headerRow {
@@ -178,6 +203,11 @@
 @media screen and (max-width: 600px) {
   .container {
     overflow-x: auto;
+  }
+  
+  .skeleton {
+    height: 4.07vw;
+    border-radius: 1.02vw;
   }
   
   .headerRow {

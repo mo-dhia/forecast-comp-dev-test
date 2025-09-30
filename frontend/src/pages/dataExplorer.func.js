@@ -8,6 +8,7 @@ export function useDataExplorer() {
   const [page, setPage] = useState(1);
   const [allItems, setAllItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const pageSize = 25;
 
   // Reset page and items when filters change
@@ -15,6 +16,7 @@ export function useDataExplorer() {
   useEffect(() => {
     setPage(1);
     setAllItems([]);
+    setIsLoadingMore(false);
   }, [filterKey]);
 
   const query = useItems({ ...paramsObj, page, pageSize }, { 
@@ -26,14 +28,18 @@ export function useDataExplorer() {
     if (query.data) {
       if (page === 1) {
         setAllItems(query.data.items || []);
+        setIsLoadingMore(false);
       } else {
         setAllItems(prev => {
+          // Remove any skeleton items first
+          const realItems = prev.filter(item => !item._isSkeleton);
           const newItems = query.data.items || [];
           // Avoid duplicates
-          const existingIds = new Set(prev.map(item => item.id));
+          const existingIds = new Set(realItems.map(item => item.id));
           const uniqueNewItems = newItems.filter(item => !existingIds.has(item.id));
-          return [...prev, ...uniqueNewItems];
+          return [...realItems, ...uniqueNewItems];
         });
+        setIsLoadingMore(false);
       }
       setTotal(query.data.total || 0);
     }
@@ -43,15 +49,29 @@ export function useDataExplorer() {
   const metadataQuery = useMetadata();
   
   const loadMore = useCallback(() => {
-    if (!query.isFetching && allItems.length < total) {
+    if (!isLoadingMore && !query.isFetching && allItems.length < total) {
+      setIsLoadingMore(true);
       setPage(p => p + 1);
     }
-  }, [query.isFetching, allItems.length, total]);
+  }, [isLoadingMore, query.isFetching, allItems.length, total]);
   
+  // Add skeleton placeholders when loading more
+  const itemsWithSkeletons = useMemo(() => {
+    if (!isLoadingMore || allItems.length === 0) {
+      return allItems;
+    }
+    // Add pageSize skeleton placeholders to reserve space for incoming data
+    const skeletons = Array.from({ length: pageSize }, (_, i) => ({
+      id: `skeleton-${i}`,
+      _isSkeleton: true
+    }));
+    return [...allItems, ...skeletons];
+  }, [allItems, isLoadingMore, pageSize]);
+
   // Return accumulated data instead of current page data
   const accumulatedQuery = {
     ...query,
-    data: allItems.length > 0 || query.data ? { items: allItems, total } : undefined
+    data: itemsWithSkeletons.length > 0 || query.data ? { items: itemsWithSkeletons, total } : undefined
   };
 
   const categoryOptions = useMemo(() => {

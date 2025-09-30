@@ -52,12 +52,34 @@ function VirtualTable({
     const item = data[index];
     const isFocused = index === focusedRowIndex;
     
+    // Render skeleton row if this is a placeholder
+    if (item?._isSkeleton) {
+      return (
+        <div className={styles.row} style={style} role="row">
+          {columns.map((col) => (
+            <div 
+              key={col.key}
+              className={styles.cell}
+              style={{ 
+                width: col.width || 'auto', 
+                flex: col.width ? 'none' : (col.flex || 1),
+                flexShrink: 0
+              }}
+              role="gridcell"
+            >
+              <div className={styles.skeleton}></div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    
     const handleClick = () => {
       setFocusedRowIndex(index);
       onRowClick?.(item, index);
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDownLocal = (e) => {
       handleKeyDown(e, data);
     };
 
@@ -66,7 +88,7 @@ function VirtualTable({
         className={`${styles.row} ${isFocused ? styles.focused : ''}`}
         style={style}
         onClick={handleClick}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleKeyDownLocal}
         role="row"
         aria-rowindex={index + 2}
         aria-selected={isFocused}
@@ -134,13 +156,6 @@ function VirtualTable({
       >
         {Row}
       </FixedSizeList>
-      {isFetchingMore && (
-        <div className={styles.skeletonContainer}>
-          {Array.from({ length: 5 }).map((_, idx) => (
-            <SkeletonRow key={idx} columns={columns} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
