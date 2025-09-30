@@ -1,13 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 /**
  * Custom hook for VirtualTable logic
  * @param {boolean} hasMore - Whether there is more data to load
  * @param {boolean} isFetchingMore - Whether currently fetching more data
  * @param {Function} onLoadMore - Callback to load more data
+ * @param {Function} onRowClick - Callback when a row is clicked
+ * @param {number} dataLength - Number of data items
  */
-export function useVirtualTable(hasMore, isFetchingMore, onLoadMore) {
+export function useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick, dataLength) {
   const containerRef = useRef(null);
+  const [focusedRowIndex, setFocusedRowIndex] = useState(-1);
   
   // Listen to window scroll to trigger load more
   useEffect(() => {
@@ -32,7 +35,42 @@ export function useVirtualTable(hasMore, isFetchingMore, onLoadMore) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasMore, isFetchingMore, onLoadMore]);
 
+  // Keyboard navigation handler
+  const handleKeyDown = useCallback((e, data) => {
+    if (!data || dataLength === 0) return;
+
+    switch(e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setFocusedRowIndex(prev => Math.min(prev + 1, dataLength - 1));
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setFocusedRowIndex(prev => Math.max(prev - 1, 0));
+        break;
+      case 'Home':
+        e.preventDefault();
+        setFocusedRowIndex(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        setFocusedRowIndex(dataLength - 1);
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (focusedRowIndex >= 0 && focusedRowIndex < dataLength) {
+          onRowClick?.(data[focusedRowIndex], focusedRowIndex);
+        }
+        break;
+      default:
+        break;
+    }
+  }, [dataLength, focusedRowIndex, onRowClick]);
+
   return {
-    containerRef
+    containerRef,
+    focusedRowIndex,
+    setFocusedRowIndex,
+    handleKeyDown
   };
 }

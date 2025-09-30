@@ -25,15 +25,16 @@ function VirtualTable({
   onLoadMore,
   onRowClick 
 }) {
-  const { containerRef } = useVirtualTable(hasMore, isFetchingMore, onLoadMore);
+  const { containerRef, focusedRowIndex, setFocusedRowIndex, handleKeyDown } = useVirtualTable(hasMore, isFetchingMore, onLoadMore, onRowClick, data.length);
 
   // Header row renderer
   const renderHeader = () => (
-    <div className={styles.headerRow}>
+    <div className={styles.headerRow} role="row">
       {columns.map((col) => (
         <div 
           key={col.key} 
           className={styles.headerCell}
+          role="columnheader"
           style={{ 
             width: col.width || 'auto', 
             flex: col.width ? 'none' : (col.flex || 1),
@@ -49,19 +50,27 @@ function VirtualTable({
   // Data row renderer
   const Row = ({ index, style }) => {
     const item = data[index];
+    const isFocused = index === focusedRowIndex;
     
     const handleClick = () => {
+      setFocusedRowIndex(index);
       onRowClick?.(item, index);
+    };
+
+    const handleKeyDown = (e) => {
+      handleKeyDown(e, data);
     };
 
     return (
       <div 
-        className={styles.row} 
+        className={`${styles.row} ${isFocused ? styles.focused : ''}`}
         style={style}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
         role="row"
         aria-rowindex={index + 2}
-        tabIndex={0}
+        aria-selected={isFocused}
+        tabIndex={isFocused ? 0 : -1}
       >
         {columns.map((col) => (
           <div 
@@ -72,7 +81,7 @@ function VirtualTable({
               flex: col.width ? 'none' : (col.flex || 1),
               flexShrink: 0
             }}
-            role="cell"
+            role="gridcell"
           >
             {col.render ? col.render(item[col.key], item, index) : item[col.key]}
           </div>
@@ -106,7 +115,14 @@ function VirtualTable({
   const tableHeight = data.length * rowHeight;
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div 
+      className={styles.container} 
+      ref={containerRef}
+      role="grid"
+      aria-label="Data table"
+      aria-rowcount={data.length + 1}
+      aria-colcount={columns.length}
+    >
       {renderHeader()}
       <FixedSizeList
         height={tableHeight}
