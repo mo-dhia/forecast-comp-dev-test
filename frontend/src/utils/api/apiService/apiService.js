@@ -3,6 +3,7 @@
 export const API_ENDPOINTS = {
   ITEMS: "/api/items",
   FACETS_GLOBAL: "/api/facets-global",
+  METADATA: "/api/metadata",
 };
 
 const baseURL = (import.meta?.env?.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");

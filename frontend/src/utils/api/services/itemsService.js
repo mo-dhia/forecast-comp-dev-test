@@ -10,4 +10,9 @@ export const fetchGlobalFacetsRequest = async () => {
   return data;
 };
 
+export const fetchMetadataRequest = async () => {
+  const data = await apiClient.get(API_ENDPOINTS.METADATA);
+  return data;
+};
+
 
